@@ -1,0 +1,2 @@
+Turns an expression such as f(3a, 4, mul(4, 5)) into a series of tokens.
+In this instance, it turns it into `[Function(Var { name: "f", id: 0 }), Constant(3), Variable(Var { name: "a", id: 0 }), Constant(4), Function(Var { name: "mul", id: 0 }), Constant(4), Constant(5), FunctionEnd, FunctionEnd]`.
