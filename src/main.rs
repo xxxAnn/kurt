@@ -1,30 +1,29 @@
 type Numbers = u64;
 
 fn main() {
-    println!("{:?}", sbgsc("3, mul(4, sum(4, 5)), 6, 7"));
+    println!("{:?}", parse("3, mul(4, sum(4, 5)), 6, 7"));
 }
 
+
+#[derive(Debug)]
 struct Var {
     name: String, 
     id: usize
 }
 
+#[derive(Debug)]
 enum Token {
     Constant(Numbers),
     Variable(Var),
     Function(Var),
-    Parenthesis,
-    ConstantEnd,
-    VariableEnd,
-    FunctionEnd,
-    ParenthesisEnd
+    FunctionEnd
 }
 
 fn parse<T>(str_inp: T) -> Vec<Token>
 where T: Into<String> {
     let mut tokens = vec![];
 
-    let s: String = str_inp.into();
+    let s: String = str_inp.into().replace(' ', "");
     
     let ss = sbgsc(s);
 
@@ -50,7 +49,27 @@ where T: Into<String> {
                 tokens.push(Token::FunctionEnd);
             }
         } else {
-            // handle constant and variable
+            if !s.chars().nth(s.len()-1).unwrap().is_numeric() {
+                let prefix_const = &s[0..s.len()-1];
+                let var = s.chars().nth(s.len()-1).unwrap();
+
+                if prefix_const != "" {
+                    tokens.push(Token::Constant(prefix_const.parse().unwrap()));
+                }
+
+
+                tokens.push(Token::Variable(Var { name: var.to_string(), id: 0 })); // get ids
+
+            } else {
+
+                let prefix_const = &s[0..s.len()];
+
+                println!("{:?}", prefix_const);
+
+                if prefix_const != "" {
+                    tokens.push(Token::Constant(prefix_const.parse().unwrap()));
+                }
+            }
         }
 
         tokens
