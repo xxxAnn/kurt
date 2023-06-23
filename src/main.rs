@@ -1,7 +1,7 @@
 type Numbers = u64;
 
 fn main() {
-    println!("{:?}", parse("3, mul(4, sum(4, 5)), 6, 7"));
+    println!("{:?}", parse("f(3a, 4, mul(4, 5))"));
 }
 
 
@@ -63,6 +63,7 @@ where T: Into<String> {
             } else {
 
                 let prefix_const = &s[0..s.len()];
+
 
                 if prefix_const != "" {
                     tokens.push(Token::Constant(prefix_const.parse().unwrap()));
