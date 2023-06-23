@@ -64,8 +64,6 @@ where T: Into<String> {
 
                 let prefix_const = &s[0..s.len()];
 
-                println!("{:?}", prefix_const);
-
                 if prefix_const != "" {
                     tokens.push(Token::Constant(prefix_const.parse().unwrap()));
                 }
